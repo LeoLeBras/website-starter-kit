@@ -1,0 +1,16 @@
+/* -------------------------------- 
+
+  Typography
+
+-------------------------------- */
+
+@include establish-baseline();
+
+body{
+    font-family: map-get($fonts_settings, font-family);
+}
+
+
+h1{
+    font-size: rem(25px);
+}

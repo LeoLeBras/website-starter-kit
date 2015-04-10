@@ -1,0 +1,4 @@
+{
+  "directory": "./src/vendors/",
+  "registry":"http://bower.herokuapp.com"
+}

@@ -1,0 +1,11 @@
+/**
+  * Open Sans Regular
+  *
+  */
+ 
+ @font-face {
+     font-family: 'Open Sans';
+     src: url(OpenSans/OpenSans-Regular.woff) format('woff');
+     font-style: normal;
+     font-weight: normal;
+ }

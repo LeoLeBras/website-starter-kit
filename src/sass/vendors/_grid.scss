@@ -1,0 +1,20 @@
+/* -------------------------------- 
+
+  Grid   
+
+-------------------------------- */
+    
+%grid{
+	position:relative;
+	float:left;
+	@include box-sizing(border-box);
+	*zoom: 1;
+    width:100%;
+}
+
+%row{
+	width: 100%;
+    @include box-sizing(border-box);
+    height:100%;
+}
+

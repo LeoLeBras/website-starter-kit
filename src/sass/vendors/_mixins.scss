@@ -1,0 +1,394 @@
+/* -------------------------------- 
+
+1. Rem
+2. Cleafix
+3. Respond-to-retina
+4. Retina background
+5. Box-sizing
+6. Respond to
+7. Establish-baseline
+8. Transform
+9. Strip Units
+10. Transition
+11. Typo Debug
+12. Placeholder
+13. Square
+
+
+-------------------------------- */
+
+
+
+
+
+
+/* -------------------------------- 
+
+1. Rem
+
+-------------------------------- */
+
+@function rem($value, $baseline: $base-font-size) {
+    @if $value == '0' {
+        @return 0; // 0 rem -> 0
+    } 
+    
+    @if type-of($value) == list {
+        $result: ();
+
+        @each $e in $value {
+            $result: append($result, rem($e, $baseline));
+        }
+
+        @return $result;
+    } @else {
+        @return if(type-of($value) == number and unit($value) == px, $value / $baseline * 1rem, $value);
+    }
+}
+
+
+
+
+
+
+
+/* -------------------------------- 
+
+2. Clearfix
+
+-------------------------------- */
+
+@mixin clearfix() {
+    &:before,
+    &:after {
+        content: "";
+        display: table;
+    }
+    &:after {
+        clear: both;
+    }
+}
+
+
+
+
+
+
+/* -------------------------------- 
+
+3. Respond-to-retina
+
+-------------------------------- */
+
+@mixin respond-to-retina(){
+    @media
+      only screen and (-webkit-min-device-pixel-ratio: 2),
+      only screen and (   min--moz-device-pixel-ratio: 2),
+      only screen and (     -o-min-device-pixel-ratio: 2/1),
+      only screen and (        min-device-pixel-ratio: 2),
+      only screen and (                min-resolution: 192dpi),
+      only screen and (                min-resolution: 2dppx) {
+        @content;
+    }
+}
+
+
+
+
+
+
+/* -------------------------------- 
+
+4. Retina background
+
+-------------------------------- */
+
+@mixin retina-background($file-name,$dimension){
+    $extension-file     : '.png';
+    $directory-file     : '../img/';
+    $suffix-retina-file : '_@2X';
+        
+    $path-file: #{$directory-file}#{$file-name}#{$extension-file};
+    $path-file-retina: #{$directory-file}#{$file-name}#{$suffix-retina-file}#{$extension-file};
+
+    background: url($path-file);
+
+    @include respond-to-retina{
+        background: url(#{$path-file-retina});
+        background-size:rem($dimension) rem($dimension);
+    }    
+}
+
+
+
+
+
+
+/* -------------------------------- 
+
+5. Box-sing
+
+-------------------------------- */
+
+@mixin box-sizing($box-model) {
+  -webkit-box-sizing: $box-model; // Safari <= 5
+     -moz-box-sizing: $box-model; // Firefox <= 19
+          box-sizing: $box-model;
+}
+
+
+
+
+
+
+/* -------------------------------- 
+
+6. Respond to
+
+-------------------------------- */
+
+@mixin respond-to($breakpoint) {
+    @if type-of($breakpoint) == 'string' {
+        @if map-has-key($breakpoints, $breakpoint) {
+
+            $breakpoint : inspect(map-get($breakpoints, $breakpoint));
+
+            @media only screen and (min-width: $breakpoint) {
+                @content;
+            }
+        }
+
+        @else {
+            @error 'No value found for `#{$breakpoint}`. ';
+        }    
+    }
+    
+    @else{
+        @media only screen and (min-width: $breakpoint) {
+            @content;
+        }
+    }
+}
+
+
+
+
+
+
+/* -------------------------------- 
+
+7. Establish-baseline
+
+-------------------------------- */
+
+@mixin establish-baseline() {    
+    html {
+        font-size: $base-font-size * 100% / $base-font-size;
+        line-height:rem($blh);
+    }
+}
+
+
+
+
+
+
+/* -------------------------------- 
+
+8. Transform
+
+-------------------------------- */
+
+@mixin transform($transforms) {
+	   -moz-transform: $transforms;
+	     -o-transform: $transforms;
+	    -ms-transform: $transforms;
+	-webkit-transform: $transforms;
+            transform: $transforms;
+}
+
+@mixin rotate ($deg) {
+  @include transform(rotate(#{$deg}deg));
+}
+ 
+@mixin scale($scale) {
+	 @include transform(scale($scale));
+} 
+
+@mixin translate ($x, $y) {
+   @include transform(translate($x, $y));
+}
+
+@mixin skew ($x, $y) {
+   @include transform(skew(#{$x}deg, #{$y}deg));
+}
+
+@mixin transform-origin ($origin) {
+    moz-transform-origin: $origin;
+	     -o-transform-origin: $origin;
+	    -ms-transform-origin: $origin;
+	-webkit-transform-origin: $origin;
+          transform-origin: $origin;
+}
+
+
+
+
+
+
+/* -------------------------------- 
+
+9. Strip Units
+
+-------------------------------- */
+
+@function strip-units($number) {
+  @return $number / ($number * 0 + 1);
+}
+
+
+
+
+
+
+/* -------------------------------- 
+
+10. Transition
+
+-------------------------------- */
+
+@mixin transition($transition-property, $transition-time, $method) {
+    -webkit-transition: $transition-property $transition-time $method;
+    -moz-transition: $transition-property $transition-time $method;
+    -ms-transition: $transition-property $transition-time $method;
+    -o-transition: $transition-property $transition-time $method;
+    transition: $transition-property $transition-time $method;
+}
+
+
+
+
+
+
+/* -------------------------------- 
+
+11. Typo Debug
+
+-------------------------------- */
+
+@if $typo-debug == true{
+    $color-line: darken($white,6%);
+    
+	html{
+        background-image: linear-gradient($color-line 0px, transparent 1px);
+        background-size: 100% $base-line-height;
+        background-position:0 -1px;
+        
+        *{
+            background:transparent !important;   
+            color:$black !important;
+            
+            a,span,p{
+                color:$black !important;   
+            }
+        }
+        
+        img{
+            opacity:.2; 
+        }
+    }
+}
+
+
+
+
+
+
+
+/* -------------------------------- 
+
+12. Placeholder
+
+-------------------------------- */
+
+@mixin placeholder-color($color) {
+    &.placeholder { color:$color; }
+    &:-moz-placeholder { color:$color; }
+    &::-moz-placeholder { color:$color; }
+    &:-ms-input-placeholder { color:$color; }
+    &::-webkit-input-placeholder { color:$color; } 
+}
+
+
+
+
+
+
+
+/* -------------------------------- 
+
+13. Square
+
+-------------------------------- */
+
+@mixin square($a) {
+    width:rem($a);    height: rem($a);
+}
+
+
+
+
+
+
+
+/* -------------------------------- 
+
+14. Sqrt
+
+-------------------------------- */
+
+$iter: 50;
+
+@function rand() {
+    @return 4;
+}
+
+@function exponent($base, $exponent) {
+    $value: $base;
+    @if $exponent > 1 {
+    @for $i from 2 through $exponent {
+    $value: $value * $base; } }
+    @if $exponent < 1 {
+    @for $i from 0 through -$exponent {
+    $value: $value / $base; } }
+    @return $value;
+}
+
+@function pow($base, $exponent) {
+    @return exponent($base, $exponent);
+}
+
+@function sqrt($number) {
+    $guess: rand();
+    $root: $guess;
+    @for $i from 1 through $iter {
+        $root: $root - (pow($root, 2) - $number) / (2 * $root);
+    }
+    @return $root;
+}
+
+
+
+
+
+
+
+/* -------------------------------- 
+
+15. SVG Shape
+
+-------------------------------- */
+
+@function svgShape($fillColor) {
+  @return url('data:image/svg+xml,<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="183.333px" height="50.666px" viewBox="0 125 183.333 50.666" enable-background="new 0 125 183.333 50.666"> <polygon fill="' + $fillColor + '" points="92,125 0,150.333 0,150.666 92,175.666 183.333,150.333 183.333,150 "/> </svg>');
+}

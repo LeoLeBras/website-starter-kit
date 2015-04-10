@@ -1,0 +1,55 @@
+
+    /* --
+
+      Colors
+
+    -- */
+
+    $red         : #ff4250 ;
+    $yellow      : #f7bc58 ;
+
+
+
+
+    /* --
+
+      Fonts
+
+    -- */
+
+    $fonts_settings : (
+        'font-family' : 'Open Sans',
+        'font-size'   : 16px,
+        'line-height' : 25px
+    );
+
+
+
+
+    /* --
+
+      Breakpoints
+
+    -- */
+
+    $breakpoints : (
+        'small' : 320px,
+        'small-landscape' : 480px,
+        'medium'   : 1024px,
+        'medium-portrait' : 768px,
+        'large'    : 1300px,
+        'extra-large'    : 1500px,
+        'huge'     : 1800px,
+    );
+
+
+
+
+    /* --
+
+      Debug
+
+    -- */
+
+    $typo-debug : false;
+
