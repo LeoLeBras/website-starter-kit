@@ -1,3 +1,3 @@
-(function($) {
-  return console.log('dd');
-})(jQuery);
+$(document).ready(function() {
+  return console.log('Hello ! :)');
+});

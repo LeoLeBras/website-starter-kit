@@ -1,0 +1,22 @@
+
+ /**
+  * Starter Component Style
+  *
+  */ 
+
+ .Starter{
+     text-align: center;  
+     margin-top: 90px;
+     
+     &__title{
+         margin-bottom: rem(20px);   
+     }
+     
+     &__description{ 
+         display: inline-block;
+         max-width: rem(500px);
+         color:#575757;
+     }
+ }
+
+ /* ------------------------------------- */

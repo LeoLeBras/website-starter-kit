@@ -1,62 +1,48 @@
-
-    /* --
-
-      Settings
-
-    -- */
-
-    @import "app/settings";
-
-
-
-    /* --
-
-      Vendors
-
-    -- */
-
-    @import "vendors/mixins";
-    @import "vendors/core";
-    @import "vendors/reset";
-    @import "vendors/grid";
+ /**
+  * Léo Le Bras
+  * http://leolebras.com/
+  *
+  * Work with Sass
+  * http://sass-lang.com/
+  *
+  * Copyright 2012, 2014
+  * Released under the MIT license
+  * http://opensource.org/licenses/MIT
+  *
+  * Date of creation : 2012-09-05
+  * Update : 2015-04-11
+  */
+  
 
 
+ /**
+  * Core
+  *
+  */
 
-    /* --
-
-      Base
-
-    -- */
-
-    @import "app/base/typography";
-    @import "app/base/form";
+  @import "app/settings";
+  @import "vendors/functions";
+  @import "vendors/reset";
 
 
 
-    /* --
-
-      Components
-
-    -- */
-    
-    @import "app/components/header";
+ /* ------------------------------------- */
 
 
+ /**
+  * App style
+  *
+  */
 
-    /* --
+ @import "app/base/typography";
+ @import "app/base/form";
 
-      Layouts
+ @import "app/components/Header";
+ @import "app/components/Starter";
 
-    -- */
-    
-    @import "app/themes/a";
+ @import "app/themes/a";
+
+ @import "app/pages/home";
 
 
-
-    /* --
-
-      Pages
-
-    -- */
-
-    @import "app/pages/home";
+ /* ------------------------------------- */

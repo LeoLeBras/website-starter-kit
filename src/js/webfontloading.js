@@ -2,7 +2,7 @@
 
     /* **
 
-        Plugin
+        loadCSS
 
         (FilamentGroup.com - v0.1.0 - 2014-07-24
         http://filamentgroup.com/
@@ -58,15 +58,15 @@
 
     
     var ua = navigator.userAgent,
-        fontDirUrl = './fonts/fonts',
-        fontFileUrl = fontDirUrl + '--woff.css';
+        fontDirUrl = './css/fonts',
+        fontFileUrl = fontDirUrl + '-woff.css';
 
     /*if( supportsWoff2 ) {
         fontFileUrl = fontDirUrl + '--woff2.css';
     }*/
     
     if( ua.indexOf( "Android" ) > -1 && ua.indexOf( "like Gecko" ) > -1 && ua.indexOf( "Chrome" ) === -1 ){
-        fontFileUrl = fontDirUrl + '--ttf.css';
+        fontFileUrl = fontDirUrl + '-ttf.css';
     }
 
     loadCSS( fontFileUrl );

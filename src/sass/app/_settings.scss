@@ -1,55 +1,49 @@
 
-    /* --
-
-      Colors
-
-    -- */
-
-    $red         : #ff4250 ;
-    $yellow      : #f7bc58 ;
-
-
-
-
-    /* --
-
-      Fonts
-
-    -- */
-
-    $fonts_settings : (
-        'font-family' : 'Open Sans',
-        'font-size'   : 16px,
-        'line-height' : 25px
-    );
+ /**
+  * Colors
+  *
+  * @return vars
+  */ 
+ 
+ $red         : #ff4250 ;
+ $yellow      : #f7bc58 ;
+ 
 
 
 
 
-    /* --
-
-      Breakpoints
-
-    -- */
-
-    $breakpoints : (
-        'small' : 320px,
-        'small-landscape' : 480px,
-        'medium'   : 1024px,
-        'medium-portrait' : 768px,
-        'large'    : 1300px,
-        'extra-large'    : 1500px,
-        'huge'     : 1800px,
-    );
+ /**
+  * Fonts Settings
+  *
+  * @return array
+  */
+ 
+ $fonts_settings : (
+     'font-family' : 'Open Sans',
+     'font-size'   : 16px,
+     'line-height' : 24px
+ ) !global;
+ 
 
 
 
 
-    /* --
+ /**
+  * Breakpoints
+  *
+  * @return array
+  */
+ 
+ $breakpoints : (
+     'small' : 320px,
+     'medium' : 1024px,
+     'large' : 1300px,
+     'huge' : 1500px,
+     'massive' : 1800px,
+ );
 
-      Debug
+ /* ------------------------------------- */
 
-    -- */
 
-    $typo-debug : false;
+
 

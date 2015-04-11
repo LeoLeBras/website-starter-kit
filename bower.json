@@ -14,7 +14,8 @@
     "tests"
   ],
     "dependencies": {
-        "jquery": "latest"
+        "jquery": "latest",
+        "foundation": "latest"
     },
     "install": {
         "path": {

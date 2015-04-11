@@ -1,6 +1,6 @@
-(($) ->
+$(document).ready( ->
 
     # Return a test console log
-    console.log('dd')
-        
-) jQuery
+    console.log('Hello ! :)')
+
+)

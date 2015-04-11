@@ -5,11 +5,11 @@
   * Work with Gulp
   * http://gulpjs.com/
   *
-  * Copyright 2005, 2014
+  * Copyright 2014 - 2015
   * Released under the MIT license
   * http://opensource.org/licenses/MIT
   *
-  * Date of creative : 2015-04-01
+  * Date of creative : 2014-04-01
   * Update : 2015-04-10
   */
 
@@ -32,17 +32,18 @@
      sass = require('gulp-sass'),
      coffee = require('gulp-coffee'),
      gutil = require('gulp-util'),
-     pleeease = require('gulp-pleeease'),
      gulpif = require('gulp-if'),
      uglify = require('gulp-uglify'),
      useref = require('gulp-useref'),
      autoprefixer = require('gulp-autoprefixer'),
+     ttf2eot = require('gulp-ttf2eot'),
      ttf2woff = require('gulp-ttf2woff'),
-     base64 = require('gulp-inline-base64'),
+     base64 = require('gulp-base64'),
      minifyCSS = require('gulp-minify-css');
 
 
 
+ /* ------------------------------------- */
 
 
 
@@ -77,9 +78,12 @@
   *
   * @var string
   */
- var prodDir = __dirname + './prod/';
+ var prodDir = __dirname + '/prod/';
 
 
+
+
+ /* ------------------------------------- */
 
 
 
@@ -161,29 +165,6 @@
 
 
  /**
-  * Fonts
-  *
-  * @with gulp-ttf2woff gulp-base64
-  */
-
- gulp.task('fonts', function () {
-     gulp.src(srcDir + 'fonts/**/*.ttf')
-        .pipe(ttf2woff())
-        .pipe(gulp.dest(srcDir + 'fonts/'));
-     
-     gulp.src(srcDir + 'fonts/*.css')
-        .pipe(base64())
-        .pipe(gulp.dest(srcDir + 'css/'));
-     
-     
- });
-
-
-
-
-
-
- /**
   * Remove prod folder
   *
   * @with  gulp-rimraf
@@ -213,6 +194,41 @@
              bare: true
          }).on('error', gutil.log))
          .pipe(gulp.dest(srcDir + 'js/'))
+ });
+
+
+
+
+
+
+ /**
+  * Fonts
+  *
+  * @with gulp-ttf2woff gulp-base64 gulp-concat
+  */
+
+ gulp.task('fonts', function () {
+     // .woff
+     gulp.src(srcDir + 'fonts/**/*.ttf')
+        .pipe(ttf2woff())
+        .pipe(gulp.dest(srcDir + 'fonts/'));    
+    
+     // .eot
+     gulp.src(srcDir + 'fonts/**/*.ttf')
+        .pipe(ttf2eot())
+        .pipe(gulp.dest(srcDir + 'fonts/'));
+     
+     // base64 if ttf or woff
+     gulp.src(srcDir + 'fonts/*.css')
+        .pipe(base64())
+        .pipe(base64({
+            extensions: ['woff', 'ttf'],
+            maxImageSize: 1200 * 1024
+        }))
+        .pipe(minifyCSS({
+            keepSpecialComments: 0
+        }))
+        .pipe(gulp.dest(srcDir + 'css/'));
  });
 
 
@@ -266,16 +282,20 @@
          .pipe(assets)
          .pipe(gulpif('*.css', minifyCSS({
              keepSpecialComments: 0
-         }), pleeease()))
+         })))
          .pipe(gulpif('*.js', uglify()))
          .pipe(assets.restore())
          .pipe(useref())
-         .pipe(gulp.dest('prod/'));
+         .pipe(gulp.dest(prodDir));
+     
+     gulp.src(srcDir + 'css/*.css')
+         .pipe(gulp.dest(prodDir + 'css/'));
  });
 
 
 
- /* 
+ /* ------------------------------------- 
+ 
         _____       _       
        / ____|     | |      
       | |  __ _   _| |_ __  
@@ -284,4 +304,4 @@
        \_____|\__,_|_|  __/  .
                      | |    
                      |_|    
- */
+ ------------------------------------- */
