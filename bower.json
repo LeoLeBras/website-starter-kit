@@ -15,7 +15,6 @@
   ],
     "dependencies": {
         "jquery": "latest",
-        "foundation": "latest"
     },
     "install": {
         "path": {

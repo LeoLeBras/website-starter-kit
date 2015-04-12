@@ -212,11 +212,6 @@
      gulp.src(srcDir + 'fonts/**/*.ttf')
         .pipe(ttf2woff())
         .pipe(gulp.dest(srcDir + 'fonts/'));    
-    
-     // .eot
-     gulp.src(srcDir + 'fonts/**/*.ttf')
-        .pipe(ttf2eot())
-        .pipe(gulp.dest(srcDir + 'fonts/'));
      
      // base64 if ttf or woff
      gulp.src(srcDir + 'fonts/*.css')
