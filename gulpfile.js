@@ -26,6 +26,7 @@
      imagemin = require('gulp-imagemin'),
      pngcrush = require('imagemin-pngcrush'),
      pngquant = require('imagemin-pngquant'),
+     coffeeify = require('coffeeify'),
      clean = require('gulp-rimraf'),
      sourcemaps = require('gulp-sourcemaps'),
      cssbeautify = require('gulp-cssbeautify'),
@@ -39,6 +40,8 @@
      ttf2eot = require('gulp-ttf2eot'),
      ttf2woff = require('gulp-ttf2woff'),
      base64 = require('gulp-base64'),
+     browserify = require('gulp-browserify'),
+     rename = require('gulp-rename'),
      minifyCSS = require('gulp-minify-css');
 
 
@@ -185,16 +188,28 @@
  /**
   * Compile .coffee in .js
   *
-  * @with  gulp-coffee and gulp-util
+  * @with  
   */
 
  gulp.task('coffee', function () {
-     gulp.src(srcDir + 'coffee/**')
-         .pipe(coffee({
-             bare: true
-         }).on('error', gutil.log))
-         .pipe(gulp.dest(srcDir + 'js/'))
+
+     gulp.src(srcDir + 'coffee/app.coffee', { read: false })
+         .pipe(browserify({
+             transform: ['coffeeify'],
+             extensions: ['.coffee'],
+             debug: true
+         }))
+        .on('error', gutil.log)
+         .pipe(rename('app.js'))
+         .pipe(gulp.dest(srcDir + 'js/'));
  });
+
+
+
+
+
+
+
 
 
 
