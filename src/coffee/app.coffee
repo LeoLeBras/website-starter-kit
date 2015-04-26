@@ -1,9 +1,7 @@
 $(document).ready( ->
     
-    Test = require('./game.coffee');
-    HelloWorld = new Test('World')
+    require './game.coffee'
     
-    # Return a test console log
-    console.log('Hsello ! :)')
+    Hello = new Test
 
 )

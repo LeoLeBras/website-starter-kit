@@ -46,7 +46,13 @@
 
 
 
+
+
+
  /* ------------------------------------- */
+
+
+
 
 
 
@@ -86,7 +92,11 @@
 
 
 
+
+
  /* ------------------------------------- */
+
+
 
 
 
@@ -158,8 +168,7 @@
                  {removeUselessStrokeAndFill: false},
                  {removeEmptyAttrs: false}],
              use: [pngquant()]
-         }))
-         .pipe(gulp.dest(prodDir + 'img'));
+         }));
  });
 
 
@@ -203,13 +212,6 @@
          .pipe(rename('app.js'))
          .pipe(gulp.dest(srcDir + 'js/'));
  });
-
-
-
-
-
-
-
 
 
 
