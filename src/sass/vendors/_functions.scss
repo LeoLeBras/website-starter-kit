@@ -107,12 +107,12 @@
  @mixin font-settings() {    
      html {
          font-size: 100%;
-         font-family: $base-font-family;
+         font-family: rem($base-font-family);
      }
 
      body{
-         font-size: $base-font-size;
-         line-height: $base-line-height;
+         font-size: rem($base-font-size);
+         line-height: rem($base-line-height);
      }
  }
 
