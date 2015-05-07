@@ -14,7 +14,7 @@
     "tests"
   ],
     "dependencies": {
-        "jquery": "latest",
+        "sprint": "https://github.com/bendc/sprint.git"
     },
     "install": {
         "path": {
