@@ -1,11 +1,11 @@
 class ConsoleWrapper{
-    constructor(debug = false){
-        this.name = 'Console wrapper!';
+    constructor(value, debug = false){
+        this.el = value;
     }
     speak(){
         debugger;
-        console.log("Hello, I am ", this); //this == the object instance.
+        console.log(this.el);
     }
 }
 
-module.exports = ConsoleWrapper; //set what can be imported from this file
+module.exports = ConsoleWrapper;
