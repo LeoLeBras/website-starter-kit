@@ -26,12 +26,11 @@
      imagemin = require('gulp-imagemin'),
      pngcrush = require('imagemin-pngcrush'),
      pngquant = require('imagemin-pngquant'),
-     coffeeify = require('coffeeify'),
+     babelify = require('babelify'),
      clean = require('gulp-rimraf'),
      sourcemaps = require('gulp-sourcemaps'),
      cssbeautify = require('gulp-cssbeautify'),
      sass = require('gulp-sass'),
-     coffee = require('gulp-coffee'),
      gutil = require('gulp-util'),
      gulpif = require('gulp-if'),
      uglify = require('gulp-uglify'),
@@ -195,23 +194,22 @@
 
 
  /**
-  * Compile .coffee in .js
+  * Compile ES6+ syntax in ES5
   *
-  * @with  
+  * @with babelify and gulp-gutil
   */
 
- gulp.task('coffee', function () {
-
-     gulp.src(srcDir + 'coffee/app.coffee', { read: false })
-         .pipe(browserify({
-             transform: ['coffeeify'],
-             extensions: ['.coffee'],
-             debug: true
-         }))
+ gulp.task('js', function () {
+     gulp.src(srcDir + 'js/src/app.js')
+        .pipe(browserify({
+            transform: ['babelify'],
+            debug: true
+        }))
         .on('error', gutil.log)
-         .pipe(rename('app.js'))
-         .pipe(gulp.dest(srcDir + 'js/'));
+        .pipe(gulp.dest(srcDir + 'js/build/'));
  });
+
+
 
 
 
@@ -232,7 +230,6 @@
      
      // base64 if ttf or woff
      gulp.src(srcDir + 'fonts/*.css')
-        .pipe(base64())
         .pipe(base64({
             extensions: ['woff', 'ttf'],
             maxImageSize: 1200 * 1024
@@ -253,11 +250,11 @@
   *
   */
 
- gulp.task('dev', ['browser_sync', 'sass', 'img', 'coffee'], function () {
+ gulp.task('dev', ['browser_sync', 'sass', 'img', 'js'], function () {
      gulp.watch([srcDir + 'sass/**/*.scss'], ['sass']);
      gulp.watch([srcDir + 'img/**'], ['img']);
-     gulp.watch([srcDir + 'coffee/**'], ['coffee']);
-     gulp.watch([srcDir + 'js/**', srcDir + 'img/**', srcDir + 'css/**', srcDir + '*.html'], ['bs-reload']);
+     gulp.watch([srcDir + 'js/src/**'], ['js']);
+     gulp.watch([srcDir + 'js/build/**', srcDir + 'img/**', srcDir + 'css/**', srcDir + '*.html'], ['bs-reload']);
  });
 
 
@@ -306,7 +303,7 @@
 
 
 
- /* ------------------------------------- 
+ /* **********************************
  
         _____       _       
        / ____|     | |      
@@ -316,4 +313,5 @@
        \_____|\__,_|_|  __/  .
                      | |    
                      |_|    
- ------------------------------------- */
+                     
+ ********************************** */
