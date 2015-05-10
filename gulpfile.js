@@ -281,17 +281,6 @@ gulp.task('fonts', function () {
       .pipe(minifyCSS({
           keepSpecialComments: 0
       }))
-      .pipe(gulp.dest(srcDir + 'css/'));
-   
-   // base64 fonts
-   gulp.src(srcDir + fontsDir + '*.css')
-      .pipe(base64({
-          extensions: ['woff', 'ttf'],
-          maxImageSize: 12000 * 1024
-      }))
-      .pipe(minifyCSS({
-          keepSpecialComments: 0
-      }))
       .pipe(gulp.dest(buildDir + 'css/'));
 
 });
