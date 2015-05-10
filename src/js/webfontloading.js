@@ -1,13 +1,12 @@
-(function(window, undefined){
+(function(){
 
     /* **
-
         loadCSS
 
         (FilamentGroup.com - v0.1.0 - 2014-07-24
         http://filamentgroup.com/
         Copyright (c) 2014 Filament Group Copyright 2014 @scottjehl, Filament Group, Inc. Licensed MIT)
-
+        
     ** */
     
     var doc = window.document;
@@ -30,8 +29,6 @@
                 }
             }
             
-            
-            
             if( defined ){
                 ss.media = media || "all";
             }
@@ -46,8 +43,8 @@
     if( !( "querySelector" in doc ) ){
         return;
     }
-    
-    /*var supportsWoff2 = (function( win ){
+    /*
+    var supportsWoff2 = (function( win ){
         if( !( "FontFace" in win ) ) {
             return false;
         }
@@ -58,15 +55,15 @@
 
     
     var ua = navigator.userAgent,
-        fontDirUrl = './css/fonts',
-        fontFileUrl = fontDirUrl + '-woff.css';
+        fontDirUrl = './css/',
+        fontFileUrl = fontDirUrl + 'woff.css';
 
     /*if( supportsWoff2 ) {
         fontFileUrl = fontDirUrl + '--woff2.css';
     }*/
     
-    if( ua.indexOf( "Android" ) > -1 && ua.indexOf( "like Gecko" ) > -1 && ua.indexOf( "Chrome" ) === -1 ){
-        fontFileUrl = fontDirUrl + '-ttf.css';
+    if(ua.indexOf( "Android" ) > -1 && ua.indexOf( "like Gecko" ) > -1 && ua.indexOf( "Chrome" ) === -1 ){
+        fontFileUrl = fontDirUrl + 'ttf.css';
     }
 
     loadCSS( fontFileUrl );

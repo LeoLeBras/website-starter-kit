@@ -1,49 +1,42 @@
+/**
+ * Colors
+ *
+ * @return vars
+ */ 
 
- /**
-  * Colors
-  *
-  * @return vars
-  */ 
- 
- $red         : #ff4250 ;
- $yellow      : #f7bc58 ;
- 
+$primary-color    : #fff ; // white
+$secondary-color  : #000 ; // black
 
 
 
 
- /**
-  * Fonts Settings
-  *
-  * @return array
-  */
- 
- $fonts_settings : (
-     'font-family' : 'Open Sans',
-     'font-size'   : 16px,
-     'line-height' : 24px
- ) !global;
- 
+
+/**
+ * Fonts Settings
+ *
+ * @return array
+ */
+
+$fonts_settings : (
+   'font-family' : 'Open Sans',
+   'font-size'   : 16px,
+   'line-height' : 24px
+) !global;
 
 
 
 
- /**
-  * Breakpoints
-  *
-  * @return array
-  */
- 
- $breakpoints : (
-     'small' : 320px,
-     'medium' : 1024px,
-     'large' : 1300px,
-     'huge' : 1500px,
-     'massive' : 1800px,
- );
 
- /* ------------------------------------- */
+/**
+ * Breakpoints
+ *
+ * @return array
+ */
 
-
-
-
+$breakpoints : (
+   'small' : 320px,
+   'medium' : 1024px,
+   'large' : 1300px,
+   'huge' : 1500px,
+   'massive' : 1800px,
+);

@@ -43,6 +43,4 @@ Temporary Items
 .apdisk
 
 node_modules/
-prod/
-
 npm-debug.log
