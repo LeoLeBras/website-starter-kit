@@ -16,9 +16,4 @@
     "dependencies": {
         "sprint": "https://github.com/bendc/sprint.git"
     },
-    "install": {
-        "path": {
-            "js": "src/vendors"
-        }
-    }
 }

@@ -1,47 +1,47 @@
 /**
-* Léo Le Bras
-* http://leolebras.com/
-*
-* Work with Gulp
-* http://gulpjs.com/
-*
-* Copyright 2014 - 2015
-* Released under the MIT license
-* http://opensource.org/licenses/MIT
-*
-* Date of creative : 2014-04-01
-* Update : 2015-04-10
-*/
+ * Léo Le Bras
+ * http://leolebras.com/
+ *
+ * Work with Gulp
+ * http://gulpjs.com/
+ *
+ * Copyright 2014 - 2015
+ * Released under the MIT license
+ * http://opensource.org/licenses/MIT
+ *
+ * Date of creative : 2014-04-01
+ *
+ */
 
 
 
 /**
-* Import dependencies
-*
-*/
+ * Import dependencies
+ *
+ */
 
-var gulp = require('gulp'),
-    browserSync = require('browser-sync'),
-    otf2ttf = require('otf2ttf');
-    zip = require('gulp-zip'),
-    imagemin = require('gulp-imagemin'),
-    pngcrush = require('imagemin-pngcrush'),
-    pngquant = require('imagemin-pngquant'),
+var autoprefixer = require('gulp-autoprefixer'),
     babelify = require('babelify'),
-    clean = require('gulp-rimraf'),
-    sourcemaps = require('gulp-sourcemaps'),
-    cssbeautify = require('gulp-cssbeautify'),
-    sass = require('gulp-sass'),
-    gutil = require('gulp-util'),
-    gulpif = require('gulp-if'),
-    uglify = require('gulp-uglify'),
-    useref = require('gulp-useref'),
-    autoprefixer = require('gulp-autoprefixer'),
-    ttf2eot = require('gulp-ttf2eot'),
-    ttf2woff = require('gulp-ttf2woff'),
     base64 = require('gulp-base64'),
     browserify = require('gulp-browserify'),
-    minifyCSS = require('gulp-minify-css');
+    browserSync = require('browser-sync'),
+    clean = require('gulp-rimraf'),
+    cssbeautify = require('gulp-cssbeautify'),
+    gulp = require('gulp'),
+    gulpif = require('gulp-if'),
+    gutil = require('gulp-util'),
+    imagemin = require('gulp-imagemin'),
+    otf2ttf = require('otf2ttf');
+    minifyCSS = require('gulp-minify-css'),
+    pngcrush = require('imagemin-pngcrush'),
+    pngquant = require('imagemin-pngquant'),
+    sass = require('gulp-sass'),
+    sourcemaps = require('gulp-sourcemaps'),
+    uglify = require('gulp-uglify'),
+    useref = require('gulp-useref'),
+    ttf2eot = require('gulp-ttf2eot'),
+    ttf2woff = require('gulp-ttf2woff'),
+    zip = require('gulp-zip');
 
 
 
@@ -56,10 +56,10 @@ var gulp = require('gulp'),
 
 
 /**
-* Set autoprefixer config
-*
-* @var string
-*/
+ * Set autoprefixer config
+ *
+ * @var string
+ */
 
 var prefix = ["last 1 version", "> 1%", "ie 8", "ie"];
 
@@ -69,10 +69,10 @@ var prefix = ["last 1 version", "> 1%", "ie 8", "ie"];
 
 
 /**
-* Config dir folders
-*
-* @var strings
-*/
+ * Config dir folders
+ *
+ * @var strings
+ */
 
 var srcDir = './src/';
 var buildDir = __dirname + '/build/';
@@ -94,10 +94,10 @@ var fontsDir = 'fonts/';
 
 
 /**
-* Sync modifications
-*
-* @with  browser-sync
-*/
+ * Sync modifications
+ *
+ * @with  browser-sync
+ */
 
 var reload = browserSync.reload;
 
@@ -119,11 +119,11 @@ gulp.task('bs-reload', function(){
 
 
 /**
-* Compile Sass
-*
-* @with  gulp-sourcemaps gulp-sass gulp-minify-css gulp-sourcemaps gulp-cssbeautify
-* @return CSS
-*/
+ * Compile Sass
+ *
+ * @with  gulp-sourcemaps gulp-sass gulp-minify-css gulp-sourcemaps gulp-cssbeautify
+ * @return CSS
+ */
 
 gulp.task('sass', function(){
    gulp.src([srcDir + 'sass/**/*.scss'])
@@ -147,11 +147,11 @@ gulp.task('sass', function(){
 
 
 /**
-* Compile ES6+ syntax in ES5
-*
-* @with babelify and gulp-gutil
-* @return js
-*/
+ * Compile ES6+ syntax in ES5
+ *
+ * @with babelify and gulp-gutil
+ * @return js
+ */
 
 gulp.task('js', function () {
    gulp.src([srcDir + jsDir + '*.js'])
@@ -169,11 +169,11 @@ gulp.task('js', function () {
 
 
 /**
-* Minify images
-*
-* @with  gulp-imagemin imagemin-pngcrush imagemin-pngquant
-* @return images
-*/
+ * Minify images
+ *
+ * @with  gulp-imagemin imagemin-pngcrush imagemin-pngquant
+ * @return images
+ */
 
 gulp.task('img', function(){
    gulp.src([srcDir + imgDir + '**'])
@@ -193,10 +193,10 @@ gulp.task('img', function(){
 
 
 /**
-* Copy Paste .html files
-*
-* @return html
-*/
+ * Copy Paste .html files
+ *
+ * @return html
+ */
 
 gulp.task('html', function(){
    gulp.src(srcDir + '*.html')
@@ -211,10 +211,10 @@ gulp.task('html', function(){
 
 
 /**
-* Copy Paste vendors files
-*
-* @return files copy
-*/
+ * Copy Paste vendors files
+ *
+ * @return files copy
+ */
 
 gulp.task('vendors', function(){
    gulp.src(srcDir + 'vendors/**')
@@ -227,9 +227,9 @@ gulp.task('vendors', function(){
 
 
 /**
-* Dev mode
-*
-*/
+ * Dev mode
+ *
+ */
 
 gulp.task('dev', ['browser_sync', 'sass', 'img', 'js', 'html', 'vendors'], function(){
    gulp.watch([srcDir + imgDir + '**'], ['img']);
@@ -254,11 +254,11 @@ gulp.task('dev', ['browser_sync', 'sass', 'img', 'js', 'html', 'vendors'], funct
 
 
 /**
-* Fonts
-*
-* @with otf2ttf gulp-ttf2woff gulp-base64 gulp-minify-css 
-* @return fonts in base64 encode
-*/
+ * Fonts
+ *
+ * @with otf2ttf gulp-ttf2woff gulp-base64 gulp-minify-css 
+ * @return fonts in base64 encode
+ */
 
 gulp.task('fonts', function () {
 
@@ -295,10 +295,10 @@ gulp.task('fonts', function () {
 
 
 /**
-* Clean dist folder
-*
-* @with  gulp-rimraf
-*/
+ * Clean dist folder
+ *
+ * @with  gulp-rimraf
+ */
 
 gulp.task('clean', function () {
    return gulp.src(distDir, {
@@ -313,10 +313,10 @@ gulp.task('clean', function () {
 
 
 /**
-* Generate dist folder
-*
-* @with  gulp-useref gulp-if gulp-base64
-*/
+ * Generate dist folder
+ *
+ * @with  gulp-useref gulp-if gulp-base64 
+ */
 
 var assets = useref.assets();
 
@@ -343,10 +343,10 @@ gulp.task('dist', ['clean'], function(){
 
 
 /**
-* Zip prod folder
-*
-* @with  gulp-zip
-*/
+ * Zip prod folder
+ *
+ * @with  gulp-zip
+ */
 
 gulp.task('zip', ['dist'], function () {
    gulp.src(distDir + '*')
