@@ -10,7 +10,7 @@
  * http://opensource.org/licenses/MIT
  *
  * Date of creative : 2014-04-01
- *
+ * Last updated: 2015-11-05
  */
 
 
@@ -35,11 +35,11 @@ var autoprefixer = require('gulp-autoprefixer'),
     minifyCSS = require('gulp-minify-css'),
     pngcrush = require('imagemin-pngcrush'),
     pngquant = require('imagemin-pngquant'),
+    pxtorem = require('gulp-pxtorem'),
     sass = require('gulp-sass'),
     sourcemaps = require('gulp-sourcemaps'),
     uglify = require('gulp-uglify'),
     useref = require('gulp-useref'),
-    ttf2eot = require('gulp-ttf2eot'),
     ttf2woff = require('gulp-ttf2woff'),
     zip = require('gulp-zip');
 
@@ -56,7 +56,7 @@ var autoprefixer = require('gulp-autoprefixer'),
 
 
 /**
- * Set autoprefixer config
+ * Set autoprefixer and pxtorem config
  *
  * @var string
  */
@@ -126,16 +126,23 @@ gulp.task('bs-reload', function(){
  */
 
 gulp.task('sass', function(){
-   gulp.src([srcDir + 'sass/**/*.scss'])
+   gulp.src([srcDir + 'sass/*.scss'])
        .pipe(sourcemaps.init())
        .pipe(sass())
        .on('error', function (err) {
            console.log(err.message);
        })
-       .pipe(minifyCSS({
-           keepSpecialComments: 0
-       }))
        .pipe(autoprefixer(prefix))
+       .pipe(pxtorem({
+          prop_white_list: [
+            'font-size', 'line-height', 'letter-spacing', 'margin', 
+            'margin-top', 'margin-right', 'margin-bottom', 'margin-left', 'padding',
+            'padding-top', 'padding-right', 'padding-bottom', 'padding-left', 'width',
+            'height'
+          ],
+          media_query: true
+        }))
+       .pipe(minifyCSS({keepSpecialComments: 0}))
        .pipe(cssbeautify())
        .pipe(sourcemaps.write())
        .pipe(gulp.dest(buildDir + cssDir));
@@ -231,7 +238,7 @@ gulp.task('vendors', function(){
  *
  */
 
-gulp.task('dev', ['browser_sync', 'sass', 'img', 'js', 'html', 'vendors'], function(){
+gulp.task('dev', ['browser_sync', 'fonts', 'sass', 'img', 'js', 'html', 'vendors'], function(){
    gulp.watch([srcDir + imgDir + '**'], ['img']);
    gulp.watch([srcDir + jsDir + '**'], ['js']);
    gulp.watch([srcDir + sassDir + '**/*.scss'], ['sass']);
@@ -248,6 +255,8 @@ gulp.task('dev', ['browser_sync', 'sass', 'img', 'js', 'html', 'vendors'], funct
 
 
 
+
+/* ------------------------------------- */
 
 
 
@@ -321,19 +330,31 @@ gulp.task('clean', function () {
 var assets = useref.assets();
 
 gulp.task('dist', ['clean'], function(){
-   
+
+   gulp.src(buildDir + imgDir + '**')
+      .pipe(gulp.dest(distDir + imgDir));
+     
    gulp.src(buildDir + '*.html')
        .pipe(assets)
-       .pipe(gulpif('*.css', minifyCSS({
-           keepSpecialComments: 0
-       }), base64()))
+       .pipe(gulpif('*.css', minifyCSS({keepSpecialComments: 0})))
        .pipe(gulpif('*.js', uglify()))
        .pipe(assets.restore())
        .pipe(useref())
        .pipe(gulp.dest(distDir));
 
-   gulp.src(buildDir + cssDir + '*.css')
-       .pipe(gulp.dest(distDir + cssDir))
+   gulp.src([buildDir + cssDir + 'ttf.css', buildDir + cssDir + 'woff.css'])
+       .pipe(gulp.dest(distDir + cssDir));
+
+   gulp.src([buildDir + cssDir + '*', '!'+ buildDir + cssDir + 'ttf.css', '!'+ buildDir + cssDir + 'woff.css'])
+       .pipe(base64({
+            extensions: ['svg', 'png', 'jpg'],
+            maxImageSize: 100*1024, // bytes 
+        }))
+       .pipe(gulp.dest(distDir + cssDir));
+
+    gulp.src(buildDir + jsDir + '*')
+       .pipe(uglify())
+       .pipe(gulp.dest(distDir + jsDir));
 
 });
 
@@ -353,6 +374,7 @@ gulp.task('zip', ['dist'], function () {
        .pipe(zip('dist.zip'))
        .pipe(gulp.dest('./'));
 });
+
 
 
 

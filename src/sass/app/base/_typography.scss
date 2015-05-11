@@ -1,36 +1,35 @@
- 
- /**
-  * Establish font settings
-  * @with mixin "font-settings" in vendors/functions+
-  */ 
+/**
+ * Establish font settings
+ * @with mixin "font-settings" in vendors/functions/
+ */ 
 
- @include font-settings();
-
-
-
-  /* ------------------------------------- */
+@include font-settings();
 
 
 
-
- /**
-  * Headings
-  *
-  */
- 
- h1{
- }
- 
+/* ------------------------------------- */
 
 
 
 
- /**
-  * Paragraph
-  *
-  */
- 
- p{
- }
- 
- /* ------------------------------------- */
+/**
+ * Headings
+ *
+ */
+
+h1{
+
+}
+
+
+
+
+
+/**
+ * Paragraph
+ *
+ */
+
+p{
+
+}
