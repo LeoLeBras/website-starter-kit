@@ -10,3 +10,16 @@
      font-weight: normal;
  }
 
+
+/**
+  * Open Sans Semibold
+  *
+  */
+ 
+ @font-face {
+     font-family: 'Open Sans';
+     src: url(OpenSans/OpenSans-Semibold.ttf) format('truetype');
+     font-style: normal;
+     font-weight: normal;
+ }
+

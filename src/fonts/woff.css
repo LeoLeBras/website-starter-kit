@@ -9,3 +9,17 @@
      font-style: normal;
      font-weight: normal;
  }
+
+
+/**
+  * Open Sans Semibold
+  *
+  */
+ 
+ @font-face {
+     font-family: 'Open Sans';
+     src: url(OpenSans/OpenSans-Semibold.woff) format('woff');
+     font-style: normal;
+     font-weight: normal;
+ }
+

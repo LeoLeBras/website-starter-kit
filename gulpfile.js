@@ -41,6 +41,7 @@ var autoprefixer = require('gulp-autoprefixer'),
     uglify = require('gulp-uglify'),
     useref = require('gulp-useref'),
     ttf2woff = require('gulp-ttf2woff'),
+    watch = require('gulp-watch'),
     zip = require('gulp-zip');
 
 
@@ -56,7 +57,7 @@ var autoprefixer = require('gulp-autoprefixer'),
 
 
 /**
- * Set autoprefixer and pxtorem config
+ * Set autoprefixer
  *
  * @var string
  */
@@ -64,7 +65,7 @@ var autoprefixer = require('gulp-autoprefixer'),
 var prefix = ["last 1 version", "> 1%", "ie 8", "ie"];
 
 
-
+    
 
 
 
@@ -128,7 +129,11 @@ gulp.task('bs-reload', function(){
 gulp.task('sass', function(){
    gulp.src([srcDir + 'sass/*.scss'])
        .pipe(sourcemaps.init())
-       .pipe(sass())
+       .pipe(sass({
+            includePaths: [
+                srcDir + sassDir,
+            ]
+        }))
        .on('error', function (err) {
            console.log(err.message);
        })
@@ -232,25 +237,59 @@ gulp.task('vendors', function(){
 
 
 
+/**
+ * Clean build folder
+ *
+ * @with  gulp-rimraf
+ */
+
+gulp.task('clean', function () {
+   return gulp.src(buildDir, {
+           read: false
+       })
+       .pipe(clean());
+});
+
+
+
+
+
+
 
 /**
  * Dev mode
  *
  */
 
-gulp.task('dev', ['browser_sync', 'fonts', 'sass', 'img', 'js', 'html', 'vendors'], function(){
-   gulp.watch([srcDir + imgDir + '**'], ['img']);
-   gulp.watch([srcDir + jsDir + '**'], ['js']);
-   gulp.watch([srcDir + sassDir + '**/*.scss'], ['sass']);
-   gulp.watch([srcDir + '*.html'], ['html']);
-   gulp.watch([srcDir + 'vendors/**'], ['vendors']);
-   gulp.watch([
+gulp.task('dev', ['clean'], function(){
+
+  gulp.start('browser_sync', 'fonts', 'sass', 'img', 'js', 'html', 'vendors');
+
+  watch(srcDir + imgDir + '**', function(){
+    gulp.start('img');
+  });
+  watch(srcDir + jsDir + '**', function(){
+    gulp.start('js');
+  });
+  watch(srcDir + sassDir + '**/*.scss', function(){
+    gulp.start('sass');
+  });
+  watch(srcDir + '*.html', function(){
+    gulp.start('html');
+  });
+  watch(srcDir + 'vendors/**', function(){
+    gulp.start('vendors');
+  });
+  
+  watch([
     buildDir + jsDir + '**', 
     buildDir + imgDir + '**', 
     buildDir + cssDir + '**', 
     buildDir + '*.html', 
-    buildDir + 'vendors/**'],
-    ['bs-reload']);
+    buildDir + 'vendors/**'],function(){
+      gulp.start('bs-reload');
+  });
+  
 });
 
 
@@ -282,10 +321,10 @@ gulp.task('fonts', function () {
       .pipe(gulp.dest(srcDir + 'fonts/'));    
    
    // base64 fonts
-   gulp.src(srcDir + fontsDir + '*.css')
+   gulp.src([srcDir + fontsDir + 'ttf.css', srcDir + fontsDir + 'woff.css'])
       .pipe(base64({
           extensions: ['woff', 'ttf'],
-          maxImageSize: 12000 * 1024
+          maxImageSize: 120000 * 1024
       }))
       .pipe(minifyCSS({
           keepSpecialComments: 0
@@ -304,24 +343,6 @@ gulp.task('fonts', function () {
 
 
 /**
- * Clean dist folder
- *
- * @with  gulp-rimraf
- */
-
-gulp.task('clean', function () {
-   return gulp.src(distDir, {
-           read: false
-       })
-       .pipe(clean());
-});
-
-
-
-
-
-
-/**
  * Generate dist folder
  *
  * @with  gulp-useref gulp-if gulp-base64 
@@ -329,7 +350,12 @@ gulp.task('clean', function () {
 
 var assets = useref.assets();
 
-gulp.task('dist', ['clean'], function(){
+gulp.task('dist', function(){
+   
+   gulp.src(distDir, {
+        read: false
+      })
+      .pipe(clean());
 
    gulp.src(buildDir + imgDir + '**')
       .pipe(gulp.dest(distDir + imgDir));
@@ -350,6 +376,7 @@ gulp.task('dist', ['clean'], function(){
             extensions: ['svg', 'png', 'jpg'],
             maxImageSize: 100*1024, // bytes 
         }))
+       .pipe(minifyCSS(minifyCSS({keepSpecialComments: 0})))
        .pipe(gulp.dest(distDir + cssDir));
 
     gulp.src(buildDir + jsDir + '*')
