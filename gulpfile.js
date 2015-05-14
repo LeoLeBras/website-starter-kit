@@ -44,6 +44,7 @@ var autoprefixer = require('gulp-autoprefixer'),
     watch = require('gulp-watch'),
     zip = require('gulp-zip');
 
+var reload = browserSync.reload;
 
 
 
@@ -75,8 +76,8 @@ var prefix = ["last 1 version", "> 1%", "ie 8", "ie"];
  * @var strings
  */
 
-var srcDir = './src/';
-var buildDir = __dirname + '/build/';
+var srcDir =  __dirname + '/src/';
+var buildDir = './build/';
 var distDir = __dirname + '/dist/';
 
 var cssDir = 'css/';
@@ -108,10 +109,6 @@ gulp.task('browser_sync', function(){
            baseDir: buildDir
        }
    });
-});
-
-gulp.task('bs-reload', function(){
-   browserSync.reload();
 });
 
 
@@ -150,7 +147,8 @@ gulp.task('sass', function(){
        .pipe(minifyCSS({keepSpecialComments: 0}))
        .pipe(cssbeautify())
        .pipe(sourcemaps.write())
-       .pipe(gulp.dest(buildDir + cssDir));
+       .pipe(gulp.dest(buildDir + cssDir))
+       .pipe(reload({stream: true}));
 });
 
 
@@ -172,7 +170,8 @@ gulp.task('js', function () {
           debug: true
       }))
       .on('error', gutil.log)
-      .pipe(gulp.dest(buildDir + jsDir));
+      .pipe(gulp.dest(buildDir + jsDir))
+      .pipe(reload({stream: true}));
 });
 
 
@@ -194,7 +193,8 @@ gulp.task('img', function(){
            svgoPlugins: [],
            use: [pngquant()]
        }))
-       .pipe(gulp.dest(buildDir + imgDir));
+       .pipe(gulp.dest(buildDir + imgDir))
+       .pipe(reload({stream: true}));
 });
 
 
@@ -212,7 +212,8 @@ gulp.task('img', function(){
 
 gulp.task('html', function(){
    gulp.src(srcDir + '*.html')
-      .pipe(gulp.dest(buildDir)); 
+      .pipe(gulp.dest(buildDir))
+      .pipe(reload({stream: true}));
 });
 
 
@@ -230,7 +231,8 @@ gulp.task('html', function(){
 
 gulp.task('vendors', function(){
    gulp.src(srcDir + 'vendors/**')
-      .pipe(gulp.dest(buildDir + 'vendors/')); 
+      .pipe(gulp.dest(buildDir + 'vendors/'))
+      .pipe(reload({stream: true})); 
 });
 
 
@@ -280,16 +282,7 @@ gulp.task('dev', ['clean'], function(){
   watch(srcDir + 'vendors/**', function(){
     gulp.start('vendors');
   });
-  
-  watch([
-    buildDir + jsDir + '**', 
-    buildDir + imgDir + '**', 
-    buildDir + cssDir + '**', 
-    buildDir + '*.html', 
-    buildDir + 'vendors/**'],function(){
-      gulp.start('bs-reload');
-  });
-  
+
 });
 
 
