@@ -336,6 +336,25 @@ gulp.task('fonts', function () {
 
 
 
+
+/**
+ * Clean dist folder
+ *
+ * @with  gulp-rimraf
+ */
+
+gulp.task('clean-dist', function () {
+   return gulp.src(distDir, {
+           read: false
+       })
+       .pipe(clean());
+});
+
+
+
+
+
+
 /**
  * Generate dist folder
  *
@@ -344,13 +363,8 @@ gulp.task('fonts', function () {
 
 var assets = useref.assets();
 
-gulp.task('dist', function(){
+gulp.task('dist', ['clean-dist'], function(){
    
-   gulp.src(distDir, {
-        read: false
-      })
-      .pipe(clean());
-
    gulp.src(buildDir + imgDir + '**')
       .pipe(gulp.dest(distDir + imgDir));
      
