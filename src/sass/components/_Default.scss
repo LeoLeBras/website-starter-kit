@@ -1,0 +1,16 @@
+/**
+ * Default Component Style
+ *
+ */
+.Default{
+	display: flex;
+	min-height: 100vh;
+	background: $default-backgroundColor;
+
+	&_content{
+		margin: auto;
+		text-transform: uppercase;
+		font-size: 28px;
+		color: $default-fontColor;
+	}
+}

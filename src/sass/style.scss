@@ -1,45 +1,33 @@
- /**
-  * Léo Le Bras
-  * http://leolebras.com/
-  *
-  * Work with Sass
-  * http://sass-lang.com/
-  *
-  * Copyright 2012, 2014
-  * Released under the MIT license
-  * http://opensource.org/licenses/MIT
-  *
-  * Date of creation : 2012-09-05
-  * Last updated: 2015-11-05
-  */
-  
- /* ------------------------------------- */
+/**
+ * Léo Le Bras
+ * http://leolebras.com/
+ *
+ * Work with Sass
+ * http://sass-lang.com/
+ *
+ * Copyright 2012 - 2015
+ * Released under the MIT license
+ * http://opensource.org/licenses/MIT
+ *
+ * Date of creation : 2012-09-05
+ * Last updated: 2015-27-07
+ */
 
+@import "themes/colors";
+@import "themes/fonts";
+@import "themes/default";
 
- /**
-  * Core
-  *
-  */
+@import "utils/variables";
+@import "utils/functions";
+@import "utils/helpers";
+@import "utils/mixins";
+@import 'vendors/functions';
 
-  @import "app/settings";
-  @import "vendors/functions";
-  @import "vendors/reset";
+@import "base/normalize";
+@import "base/typography";
+@import "base/form";
+@import "base/buttons";
 
+@import "components/Default";
 
-
- /* ------------------------------------- */
-
-
- /**
-  * App style
-  *
-  */
-
- @import "app/base/typography";
- @import "app/base/form";
-
- @import "app/components/Header";
-
- @import "app/pages/home";
-
- /* ------------------------------------- */
+@import 'pages/home';

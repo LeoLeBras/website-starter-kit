@@ -1,0 +1,59 @@
+/**
+ * Square
+ *
+ */
+@mixin square($a) {
+    width: $a;
+    height: $a;
+}
+
+
+
+/**
+ * Font-settings
+ *
+ */
+@mixin font-settings() {
+    html {
+        font-size: 100;
+        font-family: map-get($fonts_settings, font-size);
+    }
+    body {
+        font-size: map-get($fonts_settings, font-size);
+        line-height: map-get($fonts_settings, line-height);
+    }
+}
+
+
+
+/**
+ * Respond-to
+ *
+ * @params $breakpoint (string or number)
+ */
+@mixin respond-to($breakpoint) {
+    @if type-of($breakpoint) == 'string' {
+        @if map-has-key($tweakpoints, $breakpoint) {
+            $breakpoint : inspect(map-get($tweakpoints, $breakpoint));
+
+            @media only screen and (min-width: $breakpoint) {
+                @content;
+            }
+        }
+        @else if map-has-key($breakpoints, $breakpoint) {
+            $breakpoint : inspect(map-get($breakpoints, $breakpoint));
+
+            @media only screen and (min-width: $breakpoint) {
+                @content;
+            }
+        }
+        @else {
+            @error 'No value found for `#{$breakpoint}`. ';
+        }
+    }
+    @else{
+        @media only screen and (min-width: $breakpoint) {
+            @content;
+        }
+    }
+}

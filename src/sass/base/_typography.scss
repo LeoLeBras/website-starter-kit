@@ -1,8 +1,7 @@
 /**
  * Establish font settings
- * @with mixin "font-settings" in vendors/functions/
- */ 
-
+ * @with mixin "font-settings" located in ./utils/mixins/
+ */
 @include font-settings();
 
 
@@ -11,25 +10,20 @@
 
 
 
-
 /**
  * Headings
  *
  */
+h1 {}
 
-h1{
-
-}
-
-
+h2 {}
 
 
 
 /**
- * Paragraph
+ * Content text
  *
  */
+p {}
 
-p{
-
-}
+span {}
