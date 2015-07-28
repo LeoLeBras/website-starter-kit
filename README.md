@@ -1,4 +1,4 @@
-# Website starter kit
+# website-starter-kit
 A starter template for effective HTML / CSS (Sass) / JS (es6+) website.
 
 ## Install
