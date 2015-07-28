@@ -3,6 +3,6 @@
  *
  * @return $number var without units
  */
-@function strip-units($number) {
+@function strip-units($number){
     @return $number / ($number * 0 + 1);
 }
