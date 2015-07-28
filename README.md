@@ -24,7 +24,7 @@ This will start a lightweight development server (browsersync dev server) with l
 ## How to build for production ?
 
 ```shell
-$ npm run production           # or: gulp production
+$ npm run build production      # or: gulp production
 ```
 
 ## Documentation
