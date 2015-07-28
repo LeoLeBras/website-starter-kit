@@ -57,7 +57,7 @@ var reload = browserSync.reload;
  */
 var srcDir = __dirname + '/src/';
 var buildDir = './__build__/';
-var distDir = __dirname + '/production/';
+var distDir = __dirname + '/dist/';
 
 var cssDir = 'css/';
 var imgDir = 'img/';
