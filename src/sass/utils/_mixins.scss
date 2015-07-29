@@ -16,7 +16,7 @@
 @mixin font-settings(){
     html {
         font-size: 100;
-        font-family: map-get($fonts_settings, font-size);
+        font-family: map-get($fonts_settings, font-family);
     }
     body {
         font-size: map-get($fonts_settings, font-size);
