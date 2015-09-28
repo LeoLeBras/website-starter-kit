@@ -228,7 +228,9 @@ gulp.task('fonts', function() {
     // otf to ttf
     gulp.src(srcDir + 'fonts/**/*.otf')
         .pipe(otf2ttf())
-        .pipe(gulp.dest(srcDir + 'fonts/'));
+        .pipe(gulp.dest(function(file){
+            return srcDir + 'fonts/' + file.data.fontName
+        }));
 
     // ttf to woff
     gulp.src(srcDir + 'fonts/**/*.ttf')
