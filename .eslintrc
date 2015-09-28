@@ -1,0 +1,17 @@
+{
+    "ecmaFeatures": {
+        "modules": true
+    },
+    "env": {
+        "browser": true,
+        "node": true
+    },
+    "rules": {
+        "quotes": [2, "single"],
+        "strict": [2, "never"]
+    },
+    "globals": {
+        "__DEBUG__": true,
+        "__DEV__": true
+    }
+}
