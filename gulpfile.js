@@ -102,14 +102,7 @@ gulp.task('sass', function() {
             }),
             pxtorem({
                 media_query: true,
-                prop_white_list: ['font-size', 'line-height', 'letter-spacing', 'margin',
-                    'margin-top', 'margin-right', 'margin-bottom', 'margin-left', 'padding',
-                    'padding-top', 'padding-right', 'padding-bottom', 'padding-left', 'width',
-                    'height', 'top', 'left', 'bottom', 'right', 'border-radius', 'border',
-                    'border-top', 'border-right', 'border-bottom', 'border-left', 'min-width',
-                    'max-width', 'min-height', 'max-height', 'background-size',
-                    'background-position', 'transform'
-                ]
+                prop_white_list: []
             })
         ]))
         .pipe(minifyCSS({
