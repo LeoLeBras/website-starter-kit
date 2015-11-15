@@ -1,17 +1,7 @@
 /**
- * Square
+ * font-settings
  *
- */
-@mixin square($a){
-    width: $a;
-    height: $a;
-}
-
-
-
-/**
- * Font-settings
- *
+ * @return {css}
  */
 @mixin font-settings(){
     html {
@@ -27,9 +17,10 @@
 
 
 /**
- * Respond-to
+ * respond-to
  *
- * @params $breakpoint (string or number)
+ * @param {string} || {int} $breakpoint
+ * @return {css}
  */
 @mixin respond-to($breakpoint){
     @if type-of($breakpoint) == 'string' {

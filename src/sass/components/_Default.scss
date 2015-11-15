@@ -1,7 +1,8 @@
 /**
- * Default Component Style
+ * Default component style
  *
  */
+
 .Default{
 	display: flex;
 	min-height: 100vh;
@@ -9,8 +10,8 @@
 
 	&_content{
 		margin: auto;
-		text-transform: uppercase;
 		font-size: 28px;
+		text-transform: uppercase;
 		color: $default-fontColor;
 	}
 }
