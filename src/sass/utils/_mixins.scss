@@ -1,22 +1,4 @@
 /**
- * font-settings
- *
- * @return {css}
- */
-@mixin font-settings(){
-    html {
-        font-size: 100;
-        font-family: map-get($fonts_settings, font-family);
-    }
-    body {
-        font-size: map-get($fonts_settings, font-size);
-        line-height: map-get($fonts_settings, line-height);
-    }
-}
-
-
-
-/**
  * respond-to
  *
  * @param {string} || {int} $breakpoint
