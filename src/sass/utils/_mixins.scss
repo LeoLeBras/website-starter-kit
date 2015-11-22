@@ -6,8 +6,8 @@
  */
 @mixin respond-to($breakpoint){
     @if type-of($breakpoint) == 'string' {
-        @if map-has-key($tweakpoints, $breakpoint) {
-            $breakpoint : inspect(map-get($tweakpoints, $breakpoint));
+        @if map-has-key($breakpoints, $breakpoint) {
+            $breakpoint : inspect(map-get($breakpoints, $breakpoint));
 
             @media only screen and (min-width: $breakpoint) {
                 @content;
