@@ -129,11 +129,20 @@ gulp.task('sass', () => {
  */
 gulp.task('js', () => (
     gulp.src([srcDir + jsDir + '*.js'])
+        .pipe(sourcemaps.init())
         .pipe(babel(config.babel))
+        .on('error', function(e) {
+            console.log('>>> ERROR', e);
+            // emit here
+            this.emit('end');
+        })
+        .pipe(sourcemaps.write('.'))
         .pipe(gulp.dest(buildDir + jsDir))
         .pipe(reload({
             stream: true
         }))
+
+
 ));
 
 
