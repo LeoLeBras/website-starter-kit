@@ -114,7 +114,7 @@ gulp.task('sass', () => {
             })
         ]))
         .pipe(cssbeautify())
-        .pipe(sourcemaps.write())
+        .pipe(sourcemaps.write('.'))
         .pipe(gulp.dest(buildDir + cssDir))
         .pipe(reload({
             stream: true
@@ -129,9 +129,7 @@ gulp.task('sass', () => {
  */
 gulp.task('js', () => (
     gulp.src([srcDir + jsDir + '*.js'])
-        .pipe(babel({
-            presets: ['es2015']
-        }))
+        .pipe(babel(config.babel))
         .pipe(gulp.dest(buildDir + jsDir))
         .pipe(reload({
             stream: true

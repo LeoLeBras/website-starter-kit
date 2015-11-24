@@ -3,10 +3,13 @@ export default {
         port: 8000
     },
     fonts: {
-        formats: 'ttf woff woff2',
+        formats: 'woff woff2',
         custom: {
             'Open Sans': [400, 600]
         }
     },
-    autoprefixer: ['> 98%']
+    autoprefixer: ['> 98%'],
+    babel: {
+        presets: ['es2015']
+    }
 }
