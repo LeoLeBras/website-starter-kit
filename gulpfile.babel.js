@@ -24,7 +24,6 @@ import gulpif  from 'gulp-if';
 import gutil  from 'gulp-util';
 import imagemin  from 'gulp-imagemin';
 import inline  from 'gulp-inline-source';
-import otf2ttf  from 'otf2ttf';
 import pngcrush  from 'imagemin-pngcrush';
 import pngquant  from 'imagemin-pngquant';
 import postcss  from 'gulp-postcss';
@@ -131,9 +130,8 @@ gulp.task('js', () => (
     gulp.src([srcDir + jsDir + '*.js'])
         .pipe(sourcemaps.init())
         .pipe(babel(config.babel))
-        .on('error', function(e) {
-            console.log('>>> ERROR', e);
-            // emit here
+        .on('error', function(error) {
+            console.log(error);
             this.emit('end');
         })
         .pipe(sourcemaps.write('.'))
@@ -200,11 +198,6 @@ gulp.task('fonts', () => {
 
     // ttf
     gulp.src(srcDir + 'fonts/**/*.ttf')
-        .pipe(gulp.dest(buildDir + fontsDir));
-
-    // otf to ttf
-    gulp.src(srcDir + 'fonts/**/*.otf')
-        .pipe(otf2ttf())
         .pipe(gulp.dest(buildDir + fontsDir));
 
     // ttf to woff
