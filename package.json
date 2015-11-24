@@ -14,8 +14,7 @@
   "scripts": {
     "start": "gulp dev",
     "test": "gulpt -T --sorted",
-    "build": "gulp production",
-    "generate fonts": "gulp fonts"
+    "build": "gulp production"
   },
   "devDependencies": {
     "autoprefixer": "^5.2.0",
