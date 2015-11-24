@@ -13,8 +13,8 @@
  * Last updated: 11/06/2015
  */
 
+import babel from 'gulp-babel';
 import base64 from 'gulp-base64';
-import browserify  from 'gulp-browserify';
 import browserSync, { reload }  from 'browser-sync';
 import clean  from 'gulp-rimraf';
 import cssbeautify  from 'gulp-cssbeautify';
@@ -31,11 +31,10 @@ import postcss  from 'gulp-postcss';
 import sass  from 'gulp-sass';
 import sourcemaps  from 'gulp-sourcemaps';
 import uglify  from 'gulp-uglify';
-import useref  from 'gulp-useref';
 import ttf2woff  from 'gulp-ttf2woff';
 import ttf2woff2  from 'gulp-ttf2woff2';
 import watch  from 'gulp-watch';
-import zip  from 'gulp-zip';
+import config from './config.js';
 
 const srcDir = __dirname + '/src/',
       buildDir = './__build__/',
@@ -60,7 +59,8 @@ gulp.task('browser_sync', () => (
     browserSync({
         server: {
             baseDir: buildDir
-        }
+        },
+        port: config.server.port
     })
 ));
 
@@ -70,34 +70,56 @@ gulp.task('browser_sync', () => (
  * Compile .scss files (sass)
  *
  */
-gulp.task('sass', () => (
-    gulp.src([srcDir + 'sass/*.scss'])
+gulp.task('sass', () => {
+
+    let customFonts = {},
+        weights = [],
+        fonts = config.fonts.custom;
+
+    // Weights
+    weights[300] = 'Light';
+    weights[400] = 'Regular';
+    weights[600] = 'SemiBold';
+    weights[700] = 'Bold';
+    weights[800] = 'ExtraBold';
+
+    // Parse fonts
+    for(let font in fonts) {
+        customFonts[font] = {variants: {}};
+        fonts[font].map(weight => {
+            let url = {};
+            config.fonts.formats.split(' ').map(format => {
+                url[format] = `./../fonts/${font.replace(/\s+/g, '')}/${font.replace(/\s+/g, '')}-${weights[weight]}.${format}`
+            });
+            customFonts[font]['variants'][weight] = {
+                normal: { url: url }
+            };
+        });
+    }
+
+    return gulp.src([srcDir + 'sass/*.scss'])
         .pipe(sourcemaps.init())
-        .pipe(sass())
-        .on('error', (error) => {
-            console.log(error.message + ' on line ' + error.lineNumber + ' in file : ' + error.fileName);
-        })
+        .pipe(sass.sync().on('error', sass.logError))
         .pipe(postcss([
             require('autoprefixer')({
-                browsers: ['last 1 version']
+                browsers: config.autoprefixer
             }),
             require('postcss-pxtorem')({
                 media_query: true,
                 prop_white_list: []
             }),
             require('postcss-font-magician')({
-                custom: require(srcDir + fontsDir + 'config.js'),
-                formats: 'woff2 woff ttf'
+                custom: customFonts,
+                formats: config.fonts.formats
             })
         ]))
-        .pipe(cssnano())
         .pipe(cssbeautify())
         .pipe(sourcemaps.write())
         .pipe(gulp.dest(buildDir + cssDir))
         .pipe(reload({
             stream: true
         }))
-));
+});
 
 
 
@@ -107,11 +129,9 @@ gulp.task('sass', () => (
  */
 gulp.task('js', () => (
     gulp.src([srcDir + jsDir + '*.js'])
-        .pipe(browserify({
-            transform: ['babelify'],
-            debug: true
+        .pipe(babel({
+            presets: ['es2015']
         }))
-        .on('error', gutil.log)
         .pipe(gulp.dest(buildDir + jsDir))
         .pipe(reload({
             stream: true
@@ -157,12 +177,11 @@ gulp.task('html', () => (
  * Clean build folder
  *
  */
-gulp.task('clean', () => {
-    return gulp.src(buildDir, {
-            read: false
-        })
-        .pipe(clean());
-});
+gulp.task('clean', () => (
+    gulp.src(buildDir, {
+        read: false
+    }).pipe(clean())
+));
 
 
 
@@ -200,25 +219,12 @@ gulp.task('fonts', () => {
  *
  */
 gulp.task('dev', ['clean'], () => {
-
     gulp.start('browser_sync', 'fonts', 'sass', 'img', 'js', 'html');
-
-    watch(srcDir + imgDir + '**', () => {
-        gulp.start('img');
-    });
-    watch(srcDir + jsDir + '**', () => {
-        gulp.start('js');
-    });
-    watch(srcDir + sassDir + '**/*.scss', () => {
-        gulp.start('sass');
-    });
-    watch(srcDir + fontsDir + '**/*', () => {
-        gulp.start('fonts');
-    });
-    watch(srcDir + '*.html', () => {
-        gulp.start('html');
-    });
-
+    watch(srcDir + imgDir + '**', () => gulp.start('img'));
+    watch(srcDir + jsDir + '**', () => gulp.start('js'));
+    watch(srcDir + sassDir + '**/*.scss', () => gulp.start('sass'));
+    watch(srcDir + fontsDir + '**/*', () => gulp.start('fonts'));
+    watch(srcDir + '*.html', () => gulp.start('html'));
 });
 
 
@@ -263,9 +269,7 @@ gulp.task('production', ['clean-dist'], () => {
         .pipe(base64({
             extensions: ['svg', 'png', 'jpg']
         }))
-        .pipe(minifyCSS({
-            keepSpecialComments: 0
-        }))
+        .pipe(cssnano())
         .pipe(gulp.dest(distDir + cssDir));
 
     // Uglify js files
