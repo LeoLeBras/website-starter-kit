@@ -34,15 +34,7 @@ import ttf2woff  from 'gulp-ttf2woff';
 import ttf2woff2  from 'gulp-ttf2woff2';
 import watch  from 'gulp-watch';
 import config from './config.js';
-
-const srcDir = __dirname + '/src/',
-      buildDir = './__build__/',
-      distDir = __dirname + '/dist/',
-      cssDir = 'css/',
-      imgDir = 'img/',
-      jsDir = 'js/',
-      sassDir = 'sass/',
-      fontsDir = 'fonts/';
+const { srcDir, buildDir, distDir, cssDir, imgDir, sassDir, fontsDir, jsDir } = config.dir;
 
 
 
@@ -101,7 +93,7 @@ gulp.task('sass', () => {
         .pipe(sass.sync().on('error', sass.logError))
         .pipe(postcss([
             require('autoprefixer')({
-                browsers: config.autoprefixer
+                browsers: config.css.autoprefixer
             }),
             require('postcss-pxtorem')({
                 media_query: true,
@@ -129,7 +121,7 @@ gulp.task('sass', () => {
 gulp.task('js', () => (
     gulp.src([srcDir + jsDir + '*.js'])
         .pipe(sourcemaps.init())
-        .pipe(babel(config.babel))
+        .pipe(babel(config.javascript.babel))
         .on('error', function(error) {
             console.log(error);
             this.emit('end');
@@ -139,8 +131,6 @@ gulp.task('js', () => (
         .pipe(reload({
             stream: true
         }))
-
-
 ));
 
 
