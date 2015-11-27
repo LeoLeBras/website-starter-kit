@@ -17,7 +17,7 @@
     "build": "gulp production"
   },
   "devDependencies": {
-    "autoprefixer": "^5.2.0",
+    "autoprefixer": "^6.1.1",
     "babel": "^6.1.18",
     "babel-core": "^6.2.1",
     "babel-loader": "^6.2.0",
