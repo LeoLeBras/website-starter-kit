@@ -9,22 +9,18 @@
  * Released under the MIT license
  * http://opensource.org/licenses/MIT
  *
- * Date of creative : 01/04/2014
- * Last updated: 11/06/2015
+ * Date of creative : 2014-01-04
+ * Last updated: 2015-11-27
  */
 
-import babel from 'gulp-babel';
 import base64 from 'gulp-base64';
 import browserSync, { reload }  from 'browser-sync';
 import clean  from 'gulp-rimraf';
 import cssbeautify  from 'gulp-cssbeautify';
 import cssnano  from 'gulp-cssnano';
 import gulp  from 'gulp';
-import gulpif  from 'gulp-if';
-import gutil  from 'gulp-util';
 import imagemin  from 'gulp-imagemin';
 import inline  from 'gulp-inline-source';
-import pngcrush  from 'imagemin-pngcrush';
 import pngquant  from 'imagemin-pngquant';
 import postcss  from 'gulp-postcss';
 import sass  from 'gulp-sass';
@@ -33,54 +29,41 @@ import uglify  from 'gulp-uglify';
 import ttf2woff  from 'gulp-ttf2woff';
 import ttf2woff2  from 'gulp-ttf2woff2';
 import watch  from 'gulp-watch';
+import webpack  from 'gulp-webpack';
 import config from './config.js';
 const { srcDir, buildDir, distDir, cssDir, imgDir, sassDir, fontsDir, jsDir } = config.dir;
 
 
 
-/* ------------------------------------- */
-
-
-
-/**
- * Sync modifications
- *
- */
+// Browser sync
 gulp.task('browser_sync', () => (
     browserSync({
-        server: {
-            baseDir: buildDir
-        },
+        server: { baseDir: buildDir },
         port: config.server.port
     })
 ));
 
 
 
-/**
- * Compile .scss files (sass)
- *
- */
+// Sass
 gulp.task('sass', () => {
 
     let customFonts = {},
         weights = [],
         fonts = config.fonts.custom;
 
-    // Weights
     weights[300] = 'Light';
     weights[400] = 'Regular';
     weights[600] = 'SemiBold';
     weights[700] = 'Bold';
     weights[800] = 'ExtraBold';
 
-    // Parse fonts
     for(let font in fonts) {
         customFonts[font] = {variants: {}};
         fonts[font].map(weight => {
             let url = {};
             config.fonts.formats.split(' ').map(format => {
-                url[format] = `./../fonts/${font.replace(/\s+/g, '')}/${font.replace(/\s+/g, '')}-${weights[weight]}.${format}`
+                url[format] = `./../fonts/${font.replace(/\s+/g, '')}/${font.replace(/\s+/g, '')}-${weights[weight]}.${format}`;
             });
             customFonts[font]['variants'][weight] = {
                 normal: { url: url }
@@ -109,24 +92,15 @@ gulp.task('sass', () => {
         .pipe(gulp.dest(buildDir + cssDir))
         .pipe(reload({
             stream: true
-        }))
+        }));
 });
 
 
 
-/**
- * Compile .js files (babel)
- *
- */
+// Babel
 gulp.task('js', () => (
     gulp.src([srcDir + jsDir + '*.js'])
-        .pipe(sourcemaps.init())
-        .pipe(babel(config.javascript.babel))
-        .on('error', function(error) {
-            console.log(error);
-            this.emit('end');
-        })
-        .pipe(sourcemaps.write('.'))
+        .pipe(webpack(require('./webpack.config.js')))
         .pipe(gulp.dest(buildDir + jsDir))
         .pipe(reload({
             stream: true
@@ -135,10 +109,7 @@ gulp.task('js', () => (
 
 
 
-/**
- * Minify images
- *
- */
+// Images
 gulp.task('img', () => (
     gulp.src([srcDir + imgDir + '**'])
         .pipe(imagemin({
@@ -154,10 +125,7 @@ gulp.task('img', () => (
 
 
 
-/**
- * Copy Paste .html files
- *
- */
+// HTML
 gulp.task('html', () => (
     gulp.src(srcDir + '*.html')
         .pipe(gulp.dest(buildDir))
@@ -168,10 +136,7 @@ gulp.task('html', () => (
 
 
 
-/**
- * Clean build folder
- *
- */
+// Cleaner
 gulp.task('clean', () => (
     gulp.src(buildDir, {
         read: false
@@ -180,10 +145,7 @@ gulp.task('clean', () => (
 
 
 
-/**
- * Fonts
- *
- */
+// Fonts
 gulp.task('fonts', () => {
 
     // ttf
@@ -204,14 +166,10 @@ gulp.task('fonts', () => {
 
 
 
-/**
- * Dev mode
- *
- */
+// Dev
 gulp.task('dev', ['clean'], () => {
     gulp.start('browser_sync', 'fonts', 'sass', 'img', 'js', 'html');
     watch(srcDir + imgDir + '**', () => gulp.start('img'));
-    watch(srcDir + jsDir + '**', () => gulp.start('js'));
     watch(srcDir + sassDir + '**/*.scss', () => gulp.start('sass'));
     watch(srcDir + fontsDir + '**/*', () => gulp.start('fonts'));
     watch(srcDir + '*.html', () => gulp.start('html'));
@@ -219,14 +177,7 @@ gulp.task('dev', ['clean'], () => {
 
 
 
-/* ------------------------------------- */
-
-
-
-/**
- * Clean dist folder
- *
- */
+// Clean dist
 gulp.task('clean-dist', () => (
     gulp.src(distDir, {
         read: false
@@ -265,14 +216,14 @@ gulp.task('production', ['clean-dist'], () => {
     // Uglify js files
     gulp.src(buildDir + jsDir + '*')
         .pipe(uglify())
-        .pipe(gulp.dest(distDir + jsDir))
+        .pipe(gulp.dest(distDir + jsDir));
 
 });
 
 
 
 
-/* **********************************
+/*
 
       _____       _
      / ____|     | |
@@ -283,4 +234,4 @@ gulp.task('production', ['clean-dist'], () => {
                    | |
                    |_|
 
-********************************** */
+*/

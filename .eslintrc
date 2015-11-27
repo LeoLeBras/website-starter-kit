@@ -4,8 +4,11 @@
         "browser": true,
         "node": true
     },
+    "parser": "babel-eslint",
     "rules": {
+        "strict": 0,
         "semi": [2, "always"],
-        "quotes": [2, "single"]
+        "quotes": [2, "single"],
+        "no-unused-vars": [2, {"vars": "all", "args": "after-used"}]
     }
 }
