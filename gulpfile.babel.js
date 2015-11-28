@@ -99,7 +99,7 @@ gulp.task('sass', () => {
 
 // Babel
 gulp.task('js', () => (
-    gulp.src([srcDir + jsDir + '*.js'])
+    gulp.src(`${srcDir + jsDir}*.js`)
         .pipe(webpack(require('./webpack.config.js')))
         .pipe(gulp.dest(buildDir + jsDir))
         .pipe(reload({
@@ -177,20 +177,13 @@ gulp.task('dev', ['clean'], () => {
 
 
 
-// Clean dist
-gulp.task('clean-dist', () => (
+// Prod
+gulp.task('production', () => {
+
+    // Clean
     gulp.src(distDir, {
         read: false
-    }).pipe(clean())
-));
-
-
-
-/**
- * Generate dist folder
- *
- */
-gulp.task('production', ['clean-dist'], () => {
+    }).pipe(clean());
 
     // Move img files
     gulp.src(buildDir + imgDir + '**')
