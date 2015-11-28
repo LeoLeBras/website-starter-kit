@@ -14,10 +14,12 @@
  */
 
 import base64 from 'gulp-base64';
+import babel from 'gulp-babel';
 import browserSync, { reload }  from 'browser-sync';
 import clean  from 'gulp-rimraf';
 import cssbeautify  from 'gulp-cssbeautify';
 import cssnano  from 'gulp-cssnano';
+import del from 'del';
 import gulp  from 'gulp';
 import imagemin  from 'gulp-imagemin';
 import inline  from 'gulp-inline-source';
@@ -177,13 +179,13 @@ gulp.task('dev', ['clean'], () => {
 
 
 
-// Prod
-gulp.task('production', () => {
+// Clean dist dir
+gulp.task('clean-dist', () => del([distDir + '**/*']) );
 
-    // Clean
-    gulp.src(distDir, {
-        read: false
-    }).pipe(clean());
+
+
+// Prod
+gulp.task('build', ['clean-dist'], () => {
 
     // Move img files
     gulp.src(buildDir + imgDir + '**')
@@ -194,12 +196,12 @@ gulp.task('production', () => {
         .pipe(inline())
         .pipe(gulp.dest(distDir));
 
-    // Move css font files
-    gulp.src([buildDir + cssDir + 'ttf.css', buildDir + cssDir + 'woff.css'])
-        .pipe(gulp.dest(distDir + cssDir));
+    // Move fonts files
+    gulp.src(buildDir + fontsDir + '**/*')
+        .pipe(gulp.dest(distDir + fontsDir));
 
     // Base64 img in css files files and minify (except css font files)
-    gulp.src([buildDir + cssDir + '*', '!' + buildDir + cssDir + 'ttf.css', '!' + buildDir + cssDir + 'woff.css'])
+    gulp.src(buildDir + cssDir + '*')
         .pipe(base64({
             extensions: ['svg', 'png', 'jpg']
         }))
@@ -207,7 +209,8 @@ gulp.task('production', () => {
         .pipe(gulp.dest(distDir + cssDir));
 
     // Uglify js files
-    gulp.src(buildDir + jsDir + '*')
+    gulp.src(buildDir + jsDir + '**/*.js')
+        .pipe(babel(config.javascript.babel))
         .pipe(uglify())
         .pipe(gulp.dest(distDir + jsDir));
 
