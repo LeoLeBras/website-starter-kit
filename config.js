@@ -23,6 +23,6 @@ export default {
     },
     javascript: {
         entry: ['index.js'],
-        babel: { presets: ['es2015'] }
+        babel: { presets: ['es2015', 'stage-0'] }
     }
 };
