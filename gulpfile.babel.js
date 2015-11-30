@@ -153,10 +153,6 @@ gulp.task('clean', () => (
 // Fonts
 gulp.task('fonts', () => {
 
-    // ttf
-    gulp.src(srcDir + 'fonts/**/*.ttf')
-        .pipe(gulp.dest(buildDir + fontsDir));
-
     // ttf to woff
     gulp.src(srcDir + 'fonts/**/*.ttf')
         .pipe(ttf2woff())
