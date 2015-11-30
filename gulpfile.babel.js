@@ -40,8 +40,11 @@ const { srcDir, buildDir, distDir, cssDir, imgDir, sassDir, fontsDir, jsDir } = 
 // Browser sync
 gulp.task('browser_sync', () => (
     browserSync({
-        server: { baseDir: buildDir },
-        port: config.server.port
+        server: {
+            baseDir: buildDir
+        },
+        port: config.server.port,
+        online: true
     })
 ));
 
