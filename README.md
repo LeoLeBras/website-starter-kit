@@ -1,5 +1,17 @@
 # website-starter-kit
-A starter template for effective HTML / CSS (Sass) / JS (es6+) website.
+An ES6+/Sass boilerplate with common frontend tasks using gulp as build system.
+
+## Requirements
+- Node.js (5.0 or newer)
+
+## Stack
+- [Babel](http://babeljs.io/) `^6.0.0` ES6+ support
+- [Sass](http://sass-lang.com/) CSS with superpowers
+- [Imagemin](https://github.com/imagemin/imagemin) minify images seamlessly
+- [Browsersync](http://www.browsersync.io/) time-saving synchronised browser testing
+- [Gulp](http://gulpjs.com/) streaming build system
+- [Webpack](https://webpack.github.io/) module loader and bundler
+
 
 ## Getting started
 
@@ -30,7 +42,4 @@ $ npm run build                # or: gulp production
 ```
 
 ## Documentation
-Coming soon…
-
-## Roadmap
 Coming (really) soon…
