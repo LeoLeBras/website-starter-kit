@@ -7,3 +7,15 @@
 @function strip-units($number){
     @return $number / ($number * 0 + 1);
 }
+
+
+
+/**
+ * image-url()
+ *
+ * @param {string} $file
+ * @return relative path
+ */
+@function image-url($file) {
+    @return url("./../img/#{$file}")
+}
