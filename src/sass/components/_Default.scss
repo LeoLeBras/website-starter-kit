@@ -4,14 +4,14 @@
  */
 
 .Default{
-	display: flex;
-	min-height: 100vh;
-	background: $default-backgroundColor;
+    display: flex;
+    min-height: 100vh;
+    background: $default-backgroundColor;
 
-	&_content{
-		margin: auto;
-		font-size: 1.75rem;
-		text-transform: uppercase;
-		color: $default-fontColor;
-	}
+    &_content{
+        margin: auto;
+        font-size: 1.75rem;
+        text-transform: uppercase;
+        color: $default-fontColor;
+    }
 }
