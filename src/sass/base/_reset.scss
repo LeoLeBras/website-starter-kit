@@ -1,4 +1,5 @@
-/* http://meyerweb.com/eric/tools/css/reset/
+/*
+   http://meyerweb.com/eric/tools/css/reset/
    v2.0 | 20110126
    License: none (public domain)
 */
@@ -16,42 +17,44 @@ article, aside, canvas, details, embed,
 figure, figcaption, footer, header, hgroup,
 menu, nav, output, ruby, section, summary,
 time, mark, audio, video {
-	margin: 0;
-	padding: 0;
-	border: 0;
-	font-size: 100%;
-	font: inherit;
-	vertical-align: baseline;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    font: inherit;
+    vertical-align: baseline;
 }
 
 /* HTML5 display-role reset for older browsers */
 article, aside, details, figcaption, figure,
 footer, header, hgroup, menu, nav, section {
-	display: block;
+    display: block;
 }
 
 body {
-	line-height: 1;
+    line-height: 1;
 }
 
 ol, ul {
-	list-style: none;
+    list-style: none;
 }
 
 blockquote, q {
-	quotes: none;
+    quotes: none;
 }
 
 blockquote:before, blockquote:after,
 q:before, q:after {
-	content: '';
-	content: none;
+    content: '';
+    content: none;
 }
 
 table {
-	border-collapse: collapse;
-	border-spacing: 0;
+    border-collapse: collapse;
+    border-spacing: 0;
 }
+
+
 
 /*
   Personal additions :
@@ -65,7 +68,7 @@ body {
 
 article, aside, div, footer, header,
 nav, section {
-	box-sizing:border-box;
+    box-sizing:border-box;
 }
 
 input, button, textarea, select {
@@ -82,9 +85,21 @@ input, button, textarea, select {
     line-height:1em;
     outline:none;
     appearance:none;
+	-webkit-margin-before:0;
+	-webkit-margin-end:0;
+	-webkit-margin-after:0;
+	-webkit-margin-start:0;
+	-webkit-padding-before:0;
+	-webkit-padding-end:0;
+	-webkit-padding-after:0;
+	-webkit-padding-start:0;
 }
 
 a {
     color:inherit;
     outline:none;
+}
+
+strong {
+    font-weight: bold;
 }
