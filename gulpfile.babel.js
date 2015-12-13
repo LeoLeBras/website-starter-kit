@@ -116,12 +116,8 @@ gulp.task('js', () => (
 
 // Images
 gulp.task('img', () => (
-    gulp.src([srcDir + imgDir + '**'])
-        .pipe(imagemin({
-            progressive: true,
-            svgoPlugins: [],
-            use: [pngquant()]
-        }))
+    gulp.src(srcDir + imgDir + '**')
+        .pipe(imagemin())
         .pipe(gulp.dest(buildDir + imgDir))
         .pipe(reload({
             stream: true
