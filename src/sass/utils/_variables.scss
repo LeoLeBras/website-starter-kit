@@ -1,11 +1,23 @@
+/*
+  Responsive
+*/
+
 $breakpoints: (
-    'small'        : 320px,
+    'small'        : 33.125rem,
+    'medium'       : 48rem,
+    'normal'       : 61.25rem,
+    'large'        : 75rem,
+    'huge'         : 87.5rem,
+    'massive'      : 100rem
+);
+
+/* ( rem => px
+    'small'        : 530px,
     'medium'       : 768px,
+    'normal'       : 980px,
     'large'        : 1200px,
     'huge'         : 1400px,
-    'massive'      : 1600px,
-    'wide'         : 1800px,
-    'ultra-wide'   : 2500px
-);
+    'massive'      : 1600px
+) */
 
 $tweakpoints: ();

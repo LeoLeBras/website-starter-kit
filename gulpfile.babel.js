@@ -83,10 +83,6 @@ gulp.task('sass', () => {
             require('autoprefixer')({
                 browsers: config.css.autoprefixer
             }),
-            require('postcss-pxtorem')({
-                media_query: true,
-                prop_white_list: []
-            }),
             require('postcss-font-magician')({
                 custom: customFonts,
                 formats: config.fonts.formats
