@@ -3,13 +3,12 @@
  *
  */
 form {
-	input, textarea, button {
-		font-family: $default-fontFamily;
+    input, textarea, button {
+	     font-family: $default-fontFamily;
 	}
 
-	input {}
+    input {}
+    textarea {}
+    button {}
 
-	textarea {}
-
-	button {}
 }
