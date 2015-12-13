@@ -1,11 +1,9 @@
-// Breakpoints
-
 $breakpoints:(
- 	'small'       	 : 320px,
- 	'medium'  	 : 768px,
- 	'large'	     	 : 1200px,
- 	'huge' 	     	 : 1400px,
- 	'massive'          : 1600px,
-    	'wide'   	 : 1800px,
-    	'ultra-wide' 	 : 2500px
+    'small'        : 320px,
+    'medium'       : 768px,
+    'large'        : 1200px,
+    'huge'         : 1400px,
+    'massive'      : 1600px,
+    'wide'         : 1800px,
+    'ultra-wide'   : 2500px
 );
