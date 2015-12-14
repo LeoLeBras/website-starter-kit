@@ -23,7 +23,6 @@ import del from 'del';
 import gulp  from 'gulp';
 import imagemin  from 'gulp-imagemin';
 import inline  from 'gulp-inline-source';
-import pngquant  from 'imagemin-pngquant';
 import postcss  from 'gulp-postcss';
 import sass  from 'gulp-sass';
 import sourcemaps  from 'gulp-sourcemaps';
